@@ -25,9 +25,9 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/demo/bind": {
+        "/admin_login/login": {
             "post": {
-                "description": "测试数据绑定",
+                "description": "管理员登录",
                 "consumes": [
                     "application/json"
                 ],
@@ -35,18 +35,18 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "用户"
+                    "管理员接口"
                 ],
-                "summary": "测试数据绑定",
-                "operationId": "/demo/bind",
+                "summary": "管理员登录",
+                "operationId": "/admin_login/login",
                 "parameters": [
                     {
                         "description": "body",
-                        "name": "polygon",
+                        "name": "body",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.DemoInput"
+                            "$ref": "#/definitions/dto.AdminLoginInput"
                         }
                     }
                 ],
@@ -62,7 +62,7 @@ var doc = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/dto.DemoInput"
+                                            "$ref": "#/definitions/dto.AdminLoginOutput"
                                         }
                                     }
                                 }
@@ -74,23 +74,27 @@ var doc = `{
         }
     },
     "definitions": {
-        "dto.DemoInput": {
+        "dto.AdminLoginInput": {
             "type": "object",
             "required": [
-                "age",
-                "name",
-                "passwd"
+                "password",
+                "user_name"
             ],
             "properties": {
-                "age": {
-                    "type": "integer",
-                    "example": 20
-                },
-                "name": {
+                "password": {
                     "type": "string",
-                    "example": "姓名"
+                    "example": "123456"
                 },
-                "passwd": {
+                "user_name": {
+                    "type": "string",
+                    "example": "admin"
+                }
+            }
+        },
+        "dto.AdminLoginOutput": {
+            "type": "object",
+            "properties": {
+                "token": {
                     "type": "string",
                     "example": "123456"
                 }
