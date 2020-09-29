@@ -95,5 +95,17 @@ func InitRouter(middlewares ...gin.HandlerFunc) *gin.Engine {
 		controller.RegisterAdminLogin(adminLoginGroup)
 	}
 
+	adminGroup := router.Group("/admin/")
+	adminGroup.Use(
+		sessions.Sessions("mysession", store),
+		middleware.RecoveryMiddleware(),
+		middleware.RequestLog(),
+		middleware.SessionAuthMiddleware(),
+		middleware.TranslationMiddleware(),
+	)
+	{
+		controller.RegisterAdmin(adminGroup)
+	}
+
 	return router
 }
