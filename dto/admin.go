@@ -6,8 +6,14 @@
 */
 package dto
 
-import "time"
+import (
+	"time"
 
+	"github.com/gin-gonic/gin"
+	"github.com/zhangxuanru/go_gateway_demo/public"
+)
+
+//管理员信息
 type AdminInfoOutput struct {
 	ID           int       `json:"id"`
 	Name         string    `json:"name"`
@@ -15,4 +21,14 @@ type AdminInfoOutput struct {
 	Avatar       string    `json:"avatar"`
 	Introduction string    `json:"introduction"`
 	Roles        []string  `json:"roles"`
+}
+
+//修改密码
+type AdminChangePwdInput struct {
+	OldPassWd string `json:"old_pass_wd" form:"old_pass_wd"  comment:"旧密码" example:"123456" validate:"required"`
+	NewPassWd string `json:"new_pass_wd" form:"new_pass_wd"  comment:"新密码" example:"123456" validate:"required"`
+}
+
+func (param *AdminChangePwdInput) BindValidParam(c *gin.Context) error {
+	return public.DefaultGetValidParams(c, param)
 }

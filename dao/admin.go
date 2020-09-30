@@ -33,6 +33,10 @@ func (a *Admin) TableName() string {
 	return "gateway_admin"
 }
 
+func (a *Admin) Edit(c *gin.Context, tx *gorm.DB) error {
+	return tx.SetCtx(public.GetGinTraceContext(c)).Save(a).Error
+}
+
 func (a *Admin) LoginCheck(c *gin.Context, tx *gorm.DB, param *dto.AdminLoginInput) (*Admin, error) {
 	adminInfo, err := a.Find(c, tx, &Admin{UserName: param.UserName, IsDelete: 0})
 	if err != nil {

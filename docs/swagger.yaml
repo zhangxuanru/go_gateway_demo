@@ -1,4 +1,16 @@
 definitions:
+  dto.AdminChangePwdInput:
+    properties:
+      new_pass_wd:
+        example: "123456"
+        type: string
+      old_pass_wd:
+        example: "123456"
+        type: string
+    required:
+    - new_pass_wd
+    - old_pass_wd
+    type: object
   dto.AdminInfoOutput:
     properties:
       avatar:
@@ -72,6 +84,34 @@ paths:
       summary: 管理员信息获取
       tags:
       - 管理员接口
+  /admin/change_pwd:
+    post:
+      consumes:
+      - application/json
+      description: 管理员修改密码
+      operationId: /admin/change_pwd
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.AdminChangePwdInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            allOf:
+            - $ref: '#/definitions/middleware.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: 管理员修改密码
+      tags:
+      - 管理员接口
   /admin_login/login:
     post:
       consumes:
@@ -98,6 +138,27 @@ paths:
                   $ref: '#/definitions/dto.AdminLoginOutput'
               type: object
       summary: 管理员登录
+      tags:
+      - 管理员接口
+  /admin_login/login_out:
+    get:
+      consumes:
+      - application/json
+      description: 管理员退出
+      operationId: /admin_login/login_out
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            allOf:
+            - $ref: '#/definitions/middleware.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: 管理员退出
       tags:
       - 管理员接口
 swagger: "2.0"

@@ -61,6 +61,53 @@ var doc = `{
                 }
             }
         },
+        "/admin/change_pwd": {
+            "post": {
+                "description": "管理员修改密码",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "管理员接口"
+                ],
+                "summary": "管理员修改密码",
+                "operationId": "/admin/change_pwd",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.AdminChangePwdInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/middleware.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/admin_login/login": {
             "post": {
                 "description": "管理员登录",
@@ -107,9 +154,62 @@ var doc = `{
                     }
                 }
             }
+        },
+        "/admin_login/login_out": {
+            "get": {
+                "description": "管理员退出",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "管理员接口"
+                ],
+                "summary": "管理员退出",
+                "operationId": "/admin_login/login_out",
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/middleware.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "dto.AdminChangePwdInput": {
+            "type": "object",
+            "required": [
+                "new_pass_wd",
+                "old_pass_wd"
+            ],
+            "properties": {
+                "new_pass_wd": {
+                    "type": "string",
+                    "example": "123456"
+                },
+                "old_pass_wd": {
+                    "type": "string",
+                    "example": "123456"
+                }
+            }
+        },
         "dto.AdminInfoOutput": {
             "type": "object",
             "properties": {

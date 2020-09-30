@@ -25,6 +25,7 @@ type AdminLoginController struct {
 func RegisterAdminLogin(router *gin.RouterGroup) {
 	adminLogin := &AdminLoginController{}
 	router.POST("/login", adminLogin.AdminLogin)
+	router.GET("/login_out", adminLogin.AdminLoginOut)
 }
 
 // AdminLogin godoc
@@ -69,4 +70,20 @@ func (a *AdminLoginController) AdminLogin(c *gin.Context) {
 	session.Save()
 	out := &dto.AdminLoginOutput{Token: admin.UserName}
 	middleware.ResponseSuccess(c, out)
+}
+
+// AdminLogin godoc
+// @Summary 管理员退出
+// @Description 管理员退出
+// @Tags 管理员接口
+// @ID /admin_login/login_out
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} middleware.Response{data=string} "success"
+// @Router /admin_login/login_out [get]
+func (a *AdminLoginController) AdminLoginOut(c *gin.Context) {
+	session := sessions.Default(c)
+	session.Delete(public.SESSION_ADMIN_INFO_KEY)
+	session.Save()
+	middleware.ResponseSuccess(c, "")
 }
